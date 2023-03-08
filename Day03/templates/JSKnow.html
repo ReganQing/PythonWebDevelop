@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .menus {
+            width: 500px;
+            border: 1px solid red;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .menus .header {
+            background-color: gold;
+            padding: 20px 10px;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+<div class="menus" onclick="myFunc()">
+    <div class="header" id="txt" style="color: darkgreen">
+        欢迎来到美丽的玉龙雪山！
+    </div>
+    <div class="item">
+        内容
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function myFunc() {
+        confirm("是否要继续")
+    }
+
+    function show() {
+        // 1.去HMTL中找到一个标签并获取它的内容(用到DOM)
+        var tag = document.getElementById("txt");
+        var dataString = tag.innerText;
+
+
+        // 2.动态起来，把文本的第一个字符放在字符串的最后面。
+        var firstChar = dataString[0];
+        var otherString = dataString.substring(1, dataString.length);
+        var newTxt = otherString + firstChar;
+
+        // 3.自动更新标签中的内容
+        tag.innerText = newTxt;
+    }
+
+    // javaScript中的一个定时器,每0.5s执行一次show函数
+    setInterval(show, 400);
+</script>
+</body>
+</html>

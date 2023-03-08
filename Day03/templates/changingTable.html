@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态表格</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Age</td>
+    </tr>
+    </thead>
+    <tbody id="body">
+
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    // 通过网络请求获取，写入页面上
+    var dataList = [
+        {id: 1, name: "张三", age: 18},
+        {id: 2, name: "张三", age: 18},
+        {id: 3, name: "张三", age: 18},
+        {id: 4, name: "张三", age: 18},
+        {id: 5, name: "张三", age: 18}
+    ];
+    for (var idx in dataList) {
+        var info = dataList[idx];
+        var tr = document.createElement("tr");
+
+        for (var key in info) {
+            var text = info[key];
+            var td = document.createElement("td");
+            td.innerText = text;
+            tr.appendChild(td);
+        }
+
+        var bodyTag = document.getElementById("body");
+        bodyTag.appendChild(tr);
+    }
+
+
+
+
+</script>
+</body>
+</html>

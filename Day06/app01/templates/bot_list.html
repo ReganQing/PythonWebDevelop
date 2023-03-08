@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+
+
+{% block content %}
+    <!-- 按钮 -->
+    <div style="margin-bottom: 15px">
+        <a type="button" class="btn btn-success" href="/bot/add/">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            {{ tilte }}
+        </a>
+    </div>
+    <!-- 面板 -->
+    <div>
+        <div class="panel panel-primary">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                机器人列表
+            </div>
+
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>机器人名称</th>
+                    <th>价格</th>
+                    <th>销售数量</th>
+                    <th>形状</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in queryset %}
+                    <tr>
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.num }}</td>
+                        <td>
+                            <img src="/media/{{ item.img }}" style="height: 80px;">
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <ul class="pagination" >
+            {{ page_string }}
+        </ul>
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">柱状图</div>
+            <div class="panel-body">
+                <div id="m1" style="width: 100%;height: 600px;">
+
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class=" col-sm-7">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">折线图</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="m2" style="width: 100%;height: 500px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-sm-5">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">饼图</div>
+                    <div class="panel-body">
+                        <div id="m3" style="width: 100%;height: 500px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/echarts.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            initBar();
+            initLine();
+            initPie();
+        })
+
+        // 初始化柱状图
+        function initBar() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('m1'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '员工业绩信息图',
+                    left: 'center',
+                    {#top: 'center',#}
+                    textAlign: 'auto',
+                },
+                tooltip: {},
+                legend: {
+                    data: [],       // 后台获取
+                    bottom: 0
+                },
+                xAxis: {
+                    data: []        // 后台获取
+                },
+                yAxis: {},
+                series: []          // 后台获取
+            }
+
+            $.ajax({
+                url: '/chart/bar/',
+                type: 'get',
+                dataType: 'JSON',
+                success: function (res) {
+                    // 将后台返回的数据更新到option里
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.xAxis.data = res.data.x_axs;
+                        option.series = res.data.series_list;
+                    }
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                }
+            })
+
+
+        }
+
+        {% comment %}
+        初始化饼状图
+        {% endcomment %}
+
+        function initPie() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('m3'));
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '销售额占比',
+                    subtext: '智能机器人类',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'horizontal',
+                    bottom: 0
+                },
+                series: [
+                    {
+                        name: 'Access From',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            $.ajax({
+                url: '/chart/pie/',
+                type: "get",
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.status) {
+                        option.series[0].data = res.data;
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                    }
+                }
+            });
+
+        }
+
+        {#  初始化折线图  #}
+
+        function initLine() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('m2'));
+            var option = {
+                title: {
+                    text: '上半年销售情况汇总',
+                    left: 'center',
+                    textAlign: 'auto'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['扫地机器人', '智能音箱', '智能管家', '洗碗机器人', '厨房机器人'],
+                    top: '5%',
+                    padding: 5
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: []
+            };
+
+            $.ajax({
+                url: '/chart/line/',
+                type: "get",
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.series = res.data.series_list;
+                        option.xAxis.data = res.data.x_axis
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                    }
+                }
+            });
+
+        }
+    </script>
+{% endblock %}

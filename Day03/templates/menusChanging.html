@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单切换</title>
+    <style>
+        .menus {
+            height: 500px;
+            width: 400px;
+            border: 1px solid olivedrab;
+        }
+        .menus .header {
+            padding: 10px 5px;
+            background-color: salmon;
+
+            cursor: pointer;
+        }
+        .menus .content a {
+            padding: 5px 5px;
+            display: block;
+            border-bottom: 1px dotted grey;
+
+            text-decoration: none;
+        }
+        .menus .content a:hover {
+                color: darkgreen;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="menus">
+    <div class="item">
+        <div class="header" onclick="clickMe(this)">上海</div>
+        <div class="content hide">
+            <a>闵行区</a>
+            <a>静安区</a>
+            <a>长宁区</a>
+            <a>宝山区</a>
+        </div>
+    </div>
+    <div class="item">
+        <div class="header" onclick="clickMe(this)">北京</div>
+        <div class="content hide">
+            <a>雄安新区</a>
+            <a>朝阳区</a>
+            <a>海淀区</a>
+            <a>大兴区</a>
+        </div>
+    </div>
+    <div class="item">
+        <div class="header" onclick="clickMe(this)">北京2</div>
+        <div class="content hide">
+            <a>雄安新区</a>
+            <a>朝阳区</a>
+            <a>海淀区</a>
+            <a>大兴区</a>
+        </div>
+    </div>
+    <div class="item">
+        <div class="header" onclick="clickMe(this)">北京3</div>
+        <div class="content hide">
+            <a>雄安新区</a>
+            <a>朝阳区</a>
+            <a>海淀区</a>
+            <a>大兴区</a>
+        </div>
+    </div>
+</div>
+
+<script src="../static/jQuery_V3_6_3.js"></script>
+<script type="text/javascript">
+    function clickMe(self) {
+        // 让下面的先展示出来
+        $(self).next().removeClass("hide");
+
+
+        // 找父亲，父亲的所有兄弟，再去每个兄弟的子孙中寻找 class=content,添加hide样式
+        $(self).parent().siblings().find(".content").addClass("hide");
+
+
+    }
+</script>
+</body>
+</html>

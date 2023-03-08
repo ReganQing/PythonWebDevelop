@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>输入内容</title>
+</head>
+<body>
+<div>
+  <input type="text" id="txtUser" placeholder="用户名">
+  <input type="text" id="txtPassword" placeholder="密码">
+  <input type="button" value="submit" onclick="getInfo()">
+</div>
+
+<ul id="view">
+
+</ul>
+<script src="/static/jQuery_V3_6_3.js"></script>
+<script type="text/javascript">
+  function  getInfo() {
+    // 1.获取用户输入的用户名和密码
+    let username = $("#txtUser").val();
+    let password = $("#txtPassword").val();
+    let dataString = username + password;
+
+    // 2.创建li标签，在li的内部写入内容， $("<li>")
+    let newLi = $("<li>").text(dataString);
+
+    // 3.把新建的li标签添加到ul里面
+    $("#view").append(newLi);
+
+  }
+</script>
+</body>
+</html>

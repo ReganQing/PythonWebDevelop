@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}}
+
+{% block content %}
+    <!-- 按钮 -->
+    <div style="margin-bottom: 15px" class="clearfix">
+        <a type="button" class="btn btn-success" href="/num/add/">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            添加靓号
+        </a>
+        <div class="col-lg-6" style="float: right">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索" name="q" value="{{ search_data }}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+        </div><!-- /.col-lg-6 -->
+    </div>
+    <!-- 面板 -->
+    <div>
+        <div class="panel panel-primary">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                靓号列表
+            </div>
+
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>手机号</th>
+                    <th>价格</th>
+                    <th>类别</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in num_info %}
+                    <tr>
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.mobile }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.get_level_display }}</td>
+                        <td>{{ item.get_status_display }}</td>
+                        <td>
+                            <a type="button" class="btn btn-primary btn-xs" href="/num/{{ item.id }}/edit/">编辑</a>
+
+                            <a type="button" class="btn btn-danger btn-xs"
+                               href="/num/{{ item.id }}/del/">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix input-group">
+            <ul class="pagination" style="float: left;">
+                {{ page_string }}
+            </ul>
+
+        </div>
+
+    </div>
+{% endblock %}
